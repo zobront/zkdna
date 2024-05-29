@@ -215,7 +215,7 @@ dependencies = [
  "rand",
  "ruint",
  "serde",
- "tiny-keccak",
+ "tiny-keccak 2.0.2 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -384,7 +384,7 @@ dependencies = [
  "quote",
  "syn 2.0.66",
  "syn-solidity",
- "tiny-keccak",
+ "tiny-keccak 2.0.2 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -1417,6 +1417,13 @@ dependencies = [
  "option-ext",
  "redox_users",
  "windows-sys 0.48.0",
+]
+
+[[package]]
+name = "dna_merkle_lib"
+version = "0.1.0"
+dependencies = [
+ "tiny-keccak 2.0.2 (git+https://github.com/sp1-patches/tiny-keccak?branch=master)",
 ]
 
 [[package]]
@@ -2935,7 +2942,7 @@ version = "0.1.0"
 source = "git+https://github.com/Plonky3/Plonky3.git?branch=sp1#f535642f5bea6a2bfded8c4e51b1f2960b1f6da7"
 dependencies = [
  "p3-symmetric",
- "tiny-keccak",
+ "tiny-keccak 2.0.2 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -4678,6 +4685,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "tiny-keccak"
+version = "2.0.2"
+source = "git+https://github.com/sp1-patches/tiny-keccak?branch=master#7ff8a065b9f1414adb60d9aef3859f28705863ea"
+dependencies = [
+ "cfg-if",
+ "crunchy",
+]
+
+[[package]]
 name = "tinyvec"
 version = "1.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -5454,6 +5470,7 @@ dependencies = [
 name = "zkdna-script"
 version = "0.1.0"
 dependencies = [
+ "dna_merkle_lib",
  "sp1-helper",
  "sp1-sdk",
 ]
