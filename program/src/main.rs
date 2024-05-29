@@ -3,20 +3,20 @@
 #![no_main]
 sp1_zkvm::entrypoint!(main);
 
-pub fn main() {
-    // NOTE: values of n larger than 186 will overflow the u128 type,
-    // resulting in output that doesn't match fibonacci sequence.
-    // However, the resulting proof will still be valid!
-    let n = sp1_zkvm::io::read::<u32>();
-    let mut a: u128 = 0;
-    let mut b: u128 = 1;
-    let mut sum: u128;
-    for _ in 1..n {
-        sum = a + b;
-        a = b;
-        b = sum;
-    }
+use dna_merkle_lib::merkle::verify_proof;
 
-    sp1_zkvm::io::commit(&a);
-    sp1_zkvm::io::commit(&b);
+pub fn main() {
+    let leaf = sp1_zkvm::io::read<u32>();
+    let proof = sp1_zkvm::io::read_vec();
+
+    // todo: implement custom type for vector of vectors?
+    let root = sp1_zkvm::io::read<u32>();
+    sp1_zkvm::io::commit_slice(&root);
+
+    let index = sp1_zkvm::io::read::<u32>();
+    sp1_zkvm::io::commit::<u32>(&index);
+
+    let result = verify_proof(&root, &leaf, &proof, index as usize);
+
+    sp1_zkvm::io::commit(&result);
 }
