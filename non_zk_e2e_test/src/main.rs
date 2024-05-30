@@ -26,7 +26,8 @@ fn main() {
     // Generate the proof.
     let leaf_index = index / 128;
     let target_leaf = leaves[leaf_index];
-    let overall_index = leaf_index + leaves.len() + leaves.len() % 2;
+    let level = (index as f64).log2().floor() as u32;
+    let overall_index = leaf_index + ((2 as usize).pow(level));
     let merkle_proof = generate_merkle_proof(&leaves, overall_index);
 
     ////////////////////////////////////
