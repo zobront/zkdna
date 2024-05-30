@@ -23,11 +23,18 @@ fn main() {
     // Compute the Merkle root of the DNA sequence
     let merkle_root = compute_merkle_root(&leaves);
 
-    // Prove the leaf.
+    // Generate the proof.
     let leaf_index = index / 128;
     let target_leaf = leaves[leaf_index];
     let overall_index = leaf_index + leaves.len() + leaves.len() % 2;
     let merkle_proof = generate_merkle_proof(&leaves, overall_index);
+
+    ////////////////////////////////////
+    //// ABOVE THIS LINE IS SCRIPT /////
+    //// BELOW THIS LINE IS PROGRAM ////
+    ////////////////////////////////////
+
+    // Verify the merkle proof that the leaf is valid.
     let result = verify_proof(merkle_root, target_leaf, &merkle_proof, overall_index);
     println!("Leaf is valid: {}", result);
 
