@@ -6,9 +6,10 @@ use dna_merkle_lib::{
 
 
 fn main() {
-    // Goal: Prove that the base pair at index 52 is 'C'
+    // Goal: Prove that the base pair at index 52 is 'A'
     let index = 52;
-    let target = bp_to_bits(&b'C');
+    let target = bp_to_bits(&b'A');
+    assert!(index % 2 == 0);
 
     // Define the path to the genome file
     let file_path = Path::new("../static/genome.txt");
@@ -22,11 +23,17 @@ fn main() {
     // Compute the Merkle root of the DNA sequence
     let merkle_root = compute_merkle_root(&leaves);
 
-    // Generate a Merkle proof for the target base pair
+    // Prove the leaf.
     let leaf_index = index / 128;
-    let merkle_proof = generate_merkle_proof(&leaves, 4);
+    let target_leaf = leaves[leaf_index];
+    let overall_index = leaf_index + leaves.len() + leaves.len() % 2;
+    let merkle_proof = generate_merkle_proof(&leaves, overall_index);
+    let result = verify_proof(merkle_root, target_leaf, &merkle_proof, overall_index);
+    println!("Leaf is valid: {}", result);
 
-    // Confirm if the proof is valid.
-    let result = verify_proof(merkle_root, leaves[leaf_index], &merkle_proof, 4);
-    println!("Proof is valid: {}", result);
+    // Prove the base pair within the leaf.
+    let index_within_leaf = index % 128;
+    let byte = target_leaf[index_within_leaf / 8];
+    let bits = (byte >> (6 - index_within_leaf % 8)) & 0b11;
+    println!("BP at Index: {}", target == bits);
 }
