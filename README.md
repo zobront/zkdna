@@ -12,7 +12,7 @@ zkDNA is a proof of concept for how to get the best of both worlds:
 
 zkDNA is built with [SP1](https://github.com/succinctlabs/sp1/).
 
-## To Do
+### To Do
 
 - [x] test E2E without zk
 - [ ] get proof working in zkvm
