@@ -1423,6 +1423,7 @@ dependencies = [
 name = "dna_merkle_lib"
 version = "0.1.0"
 dependencies = [
+ "hex",
  "tiny-keccak 2.0.2 (git+https://github.com/sp1-patches/tiny-keccak?branch=master)",
 ]
 
