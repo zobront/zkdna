@@ -8,3 +8,5 @@ edition = "2021"
 [dependencies]
 tiny-keccak = { git = "https://github.com/sp1-patches/tiny-keccak", branch = "master", features = ["keccak"] }
 hex = "0.4"
+tiny-merkle = "0.3.0"
+serde = { version = "1.0", features = ["derive"] }

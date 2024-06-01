@@ -1,20 +1,18 @@
 #![no_main]
 sp1_zkvm::entrypoint!(main);
 
-use dna_merkle_lib::merkle::verify_proof;
+use dna_merkle_lib::merkle::{verify_proof, MerkleProof};
 
 pub fn main() {
-    let leaf = sp1_zkvm::io::read<u32>();
-    let proof = sp1_zkvm::io::read_vec();
+    let data = sp1_zkvm::io::read<DNAProofInputData>();
 
-    // todo: implement custom type for vector of vectors?
-    let root = sp1_zkvm::io::read<u32>();
-    sp1_zkvm::io::commit_slice(&root);
+    // Verify the merkle proof that the leaf is valid.
+    let valid = verify_proof(&data.leaf, &data.root, &data.proof);
+    sp1_zkvm::io::commit(&valid);
 
-    let index = sp1_zkvm::io::read::<u32>();
-    sp1_zkvm::io::commit::<u32>(&index);
-
-    let result = verify_proof(&root, &leaf, &proof, index as usize);
-
-    sp1_zkvm::io::commit(&result);
+    // Prove the base pair within the leaf.
+    let index_within_leaf = index % 128;
+    let byte = data.leaf[index_within_leaf / 8];
+    let bits: u8 = (byte >> (6 - index_within_leaf % 8)) & 0b11;
+    sp1_zkvm::io::commit(&bits);
 }

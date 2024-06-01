@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 dna_merkle_lib = { path = "../dna_merkle_lib" }
+hex = "0.4"
