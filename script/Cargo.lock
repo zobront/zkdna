@@ -1424,7 +1424,9 @@ name = "dna_merkle_lib"
 version = "0.1.0"
 dependencies = [
  "hex",
+ "serde",
  "tiny-keccak 2.0.2 (git+https://github.com/sp1-patches/tiny-keccak?branch=master)",
+ "tiny-merkle",
 ]
 
 [[package]]
@@ -4693,6 +4695,12 @@ dependencies = [
  "cfg-if",
  "crunchy",
 ]
+
+[[package]]
+name = "tiny-merkle"
+version = "0.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7a29005a3e25530f2b9c7301f42b770dc90aa9dd78b7107d02a61f500393fcb7"
 
 [[package]]
 name = "tinyvec"
