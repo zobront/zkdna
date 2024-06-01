@@ -1,4 +1,4 @@
-use crate::keccak_hasher::KeccakHasher;
+use crate::keccak::KeccakHasher;
 use tiny_merkle::{
     MerkleTree,
     proof::MerkleProof
