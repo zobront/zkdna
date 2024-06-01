@@ -1,5 +1,5 @@
 use std::fs::File;
-use std::io::{self, Read};
+use std::io::{self, BufRead, BufReader};
 use std::path::Path;
 
 pub fn bp_to_bits(bp: &u8) -> u8 {
@@ -14,10 +14,34 @@ pub fn bp_to_bits(bp: &u8) -> u8 {
 
 /// Reads the DNA sequence from a file located at the given path.
 pub fn read_dna_sequence(file_path: &Path) -> io::Result<String> {
-    let mut file = File::open(file_path)?;
-    let mut sequence = String::new();
-    file.read_to_string(&mut sequence)?;
-    Ok(sequence)
+    let file = File::open(file_path)?;
+    let reader = BufReader::new(file);
+
+    let mut genotypes = String::new();
+
+    for line in reader.lines() {
+        let line = line?;
+        // Skip header lines or comments
+        if line.starts_with('#') {
+            continue;
+        }
+
+        let parts: Vec<&str> = line.split('\t').collect();
+        if parts.len() != 4 {
+            println!("Invalid line: {}", line);
+            continue;
+        }
+
+        // Extract the genotype
+        let genotype = parts[3];
+
+        // Check if the genotype is a valid two-letter string containing only A, G, T, or C
+        if genotype.len() == 2 && genotype.chars().all(|c| matches!(c, 'A' | 'G' | 'T' | 'C')) {
+            genotypes.push_str(genotype);
+        }
+    }
+
+    Ok(genotypes)
 }
 
 /// Encodes a DNA sequence string into a vector of 256-bit words represented as [u8; 32].

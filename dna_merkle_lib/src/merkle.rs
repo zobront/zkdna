@@ -1,5 +1,4 @@
 use tiny_keccak::{Hasher, Keccak};
-use hex;
 
 /// Computes the Keccak256 hash of the given data.
 pub fn keccak256(data: &[u8]) -> [u8; 32] {
@@ -66,8 +65,9 @@ pub fn generate_merkle_proof(leaves: &Vec<[u8; 32]>, mut index: usize) -> Vec<[u
             index - 1
         };
 
-        let higher_level_index_count = current_level.len() + current_level.len() % 2;
-        proof.push(current_level[sibling_index - higher_level_index_count]);
+        let level = (index as f64).log2().floor() as u32;
+        let level_index = sibling_index - ((2 as usize).pow(level));
+        proof.push(current_level[level_index]);
 
         // Move up the tree
         index /= 2;
