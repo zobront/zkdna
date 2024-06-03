@@ -34,9 +34,10 @@ fn main() {
     let mut stdin = SP1Stdin::new();
     stdin.write(&proof_data);
 
-    // Create client and execute / prove the client.
+    // Create client.
     let client = ProverClient::new();
 
+    // Create a proof and verify it to ensure it worked.
     if PROVE {
         // Generate proof.
         let (pk, vk) = client.setup(ELF);
@@ -60,6 +61,8 @@ fn main() {
             .expect("saving proof failed");
 
         println!("successfully generated and verified proof for the program!")
+
+    // Execute the program to simulate proof verification.
     } else {
         // Execute the program.
         let mut public_values = client.execute(ELF, stdin).expect("execution failed");

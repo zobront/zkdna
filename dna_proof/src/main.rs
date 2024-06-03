@@ -3,7 +3,7 @@ mod proof;
 
 use merkle::{
     DNAMerkleTree,
-    helpers::{bp_to_bits, get_root_from_proof},
+    helpers::{bp_to_bits, bits_to_bp, get_root_from_proof},
 };
 use proof::DNAProof;
 
@@ -28,11 +28,19 @@ fn main() {
 
     // // Verify the merkle proof that the leaf is valid.
     let root_from_merkle_proof = get_root_from_proof(&proof.leaf, &proof.merkle_proof);
-    println!("Leaf is valid: {}", proof.root == root_from_merkle_proof);
+    if proof.root == root_from_merkle_proof {
+        println!("Merkle Proof is valid: 0x{}", hex::encode(proof.root));
+    } else {
+        println!("Merkle Proof is invalid.");
+    }
 
     // Prove the base pair within the leaf.
     let index_within_leaf = proof.index % 128;
     let byte = proof.leaf[index_within_leaf / 8];
     let bits = (byte >> (6 - index_within_leaf % 8)) & 0b11;
-    println!("BP at Index: {}", proof.target == bits);
+    if proof.target == bits {
+        println!("Base Pair is valid: {}", bits_to_bp(proof.target));
+    } else {
+        println!("Base Pair is invalid.");
+    }
 }
