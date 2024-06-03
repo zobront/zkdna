@@ -1,10 +1,9 @@
 mod merkle;
-mod proof;
-
 use merkle::{
     DNAMerkleTree,
-    helpers::bp_to_bits
+    helpers::{bp_to_bits, get_root_from_proof},
 };
+mod proof;
 use proof::DNAProof;
 
 fn main() {
@@ -27,7 +26,7 @@ fn main() {
     // // ////////////////////////////////////
 
     // // Verify the merkle proof that the leaf is valid.
-    let root_from_merkle_proof = tree.get_root_from_proof(&proof.leaf, &proof.merkle_proof);
+    let root_from_merkle_proof = get_root_from_proof(&proof.leaf, &proof.merkle_proof);
     println!("Leaf is valid: {}", proof.root == root_from_merkle_proof);
 
     // Prove the base pair within the leaf.

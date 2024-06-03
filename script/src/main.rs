@@ -2,11 +2,15 @@
 
 use sp1_sdk::{ProverClient, SP1Stdin};
 use std::path::Path;
-use dna_merkle_lib::{
-    dna_encoder::{read_dna_sequence, encode_dna_sequence, bp_to_bits},
-    merkle::{compute_merkle_root, generate_merkle_proof},
+use hex;
+
+use dna_proof::{
+    merkle::{
+        DNAMerkleTree,
+        helpers::{bp_to_bits, get_root_from_proof},
+    },
+    proof::DNAProof,
 };
-use program::DNAProofInputData;
 
 const ELF: &[u8] = include_bytes!("../../program/elf/riscv32im-succinct-zkvm-elf");
 
@@ -16,51 +20,33 @@ fn main() {
     let target = bp_to_bits(&b'T');
     assert!(index % 2 == 0);
 
-    // Define the path to the genome file
-    let file_path = Path::new("../static/genome.txt");
-
-    // Read the DNA sequence from the file
-    let dna_sequence = read_dna_sequence(file_path).unwrap();
-
-    // Encode the DNA sequence into 256-bit words
-    let leaves = encode_dna_sequence(&dna_sequence);
-
-    // Compute the Merkle root of the DNA sequence
-    let merkle_root = compute_merkle_root(&leaves);
+    // Generate a Merkle tree from the source data
+    let file_path = "../static/genome.txt";
+    let tree = DNAMerkleTree::new(file_path);
 
     // Generate the proof.
-    let leaf_index = index / 128;
-    let target_leaf = leaves[leaf_index];
-    let merkle_proof = generate_merkle_proof(&leaves, leaf_index);
+    let (leaf, merkle_proof) = tree.leaf_and_proof_from_gene_index(index);
+    let proof_data = DNAProof::new(leaf, merkle_proof, tree.root(), index, target);
 
-    // Input data.
-    let input_data = DNAProofInputData {
-        leaf: target_leaf,
-        proof: merkle_proof,
-        root: merkle_root,
-        index: index as u32,
-    };
-
-    // Generate proof.
+    // Write the proof to the input data.
     let mut stdin = SP1Stdin::new();
-    stdin.write(input_data);
+    stdin.write(&proof_data);
 
     let client = ProverClient::new();
     let (pk, vk) = client.setup(ELF);
     let mut proof = client.prove(&pk, stdin).expect("proving failed");
 
     // Read output.
-    let valid_proof = proof.public_values.read::<bool>();
-    let bit_at_index = proof.public_values.read::<u8>();
+    let target = proof.public_values.read::<u8>();
+    let root = proof.public_values.read::<[u8; 32]>();
+    let index = proof.public_values.read::<usize>();
 
-    println!("root_public: {}", valid_proof);
-    println!("index_public: {}", bit_at_index);
+    println!("target: {}", target);
+    println!("root: {}", hex::encode(root));
+    println!("index: {}", index);
 
     // Verify proof.
     client.verify(&proof, &vk).expect("verification failed");
-
-    assert!(valid_proof);
-    assert!(bit_at_index == target);
 
     // Save proof.
     proof

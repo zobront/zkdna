@@ -15,7 +15,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7a81dae078cea95a014a339291cec439d2f232ebe854a9d672b796c6afafa9b7"
 
 [[package]]
-name = "dna_merkle_lib"
+name = "dna_proof"
 version = "0.1.0"
 dependencies = [
  "hex",
@@ -91,7 +91,7 @@ dependencies = [
 [[package]]
 name = "tiny-merkle"
 version = "0.3.0"
-source = "git+https://github.com/zobront/tiny-merkle?branch=main#fb4389272ee34520be6561532ef54b525506baee"
+source = "git+https://github.com/zobront/tiny-merkle?branch=main#ca1a86178cad3a69b6992717ae3dfc31e1151e5d"
 dependencies = [
  "serde",
 ]

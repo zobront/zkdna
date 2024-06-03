@@ -1420,7 +1420,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "dna_merkle_lib"
+name = "dna_proof"
 version = "0.1.0"
 dependencies = [
  "hex",
@@ -5478,7 +5478,8 @@ dependencies = [
 name = "zkdna-script"
 version = "0.1.0"
 dependencies = [
- "dna_merkle_lib",
+ "dna_proof",
+ "hex",
  "sp1-helper",
  "sp1-sdk",
 ]

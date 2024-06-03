@@ -1,9 +1,6 @@
-pub use tiny_merkle::{
-    MerkleTree,
-    proof::MerkleProof
-};
 use serde::{Serialize, Deserialize};
 use crate::merkle::keccak::KeccakHasher;
+pub use tiny_merkle::proof::MerkleProof;
 
 #[derive(Serialize, Deserialize)]
 pub struct DNAProof {

@@ -6,4 +6,4 @@ edition = "2021"
 
 [dependencies]
 sp1-zkvm = { git = "https://github.com/succinctlabs/sp1.git", rev = "v1.0.0-testnet"  }
-dna_merkle_lib = { path = "../dna_merkle_lib" }
+dna_proof = { path = "../dna_proof" }

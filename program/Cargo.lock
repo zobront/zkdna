@@ -151,7 +151,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "dna_merkle_lib"
+name = "dna_proof"
 version = "0.1.0"
 dependencies = [
  "hex",
@@ -454,9 +454,9 @@ dependencies = [
 
 [[package]]
 name = "proc-macro2"
-version = "1.0.84"
+version = "1.0.85"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ec96c6a92621310b51366f1e28d05ef11489516e93be030060e5fc12024a49d6"
+checksum = "22244ce15aa966053a896d1accb3a6e68469b97c7f33f284b99f0d576879fc23"
 dependencies = [
  "unicode-ident",
 ]
@@ -695,7 +695,10 @@ dependencies = [
 [[package]]
 name = "tiny-merkle"
 version = "0.3.0"
-source = "git+https://github.com/zobront/tiny-merkle?branch=main#c2e6f949a45c3d538a2081f0aedd21d0250a5c3d"
+source = "git+https://github.com/zobront/tiny-merkle?branch=main#ca1a86178cad3a69b6992717ae3dfc31e1151e5d"
+dependencies = [
+ "serde",
+]
 
 [[package]]
 name = "toml_datetime"
@@ -766,6 +769,6 @@ checksum = "ced3678a2879b30306d323f4542626697a464a97c0a07c9aebf7ebca65cd4dde"
 name = "zkdna-program"
 version = "0.1.0"
 dependencies = [
- "dna_merkle_lib",
+ "dna_proof",
  "sp1-zkvm",
 ]

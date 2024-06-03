@@ -1,5 +1,5 @@
 [package]
-name = "dna_merkle_lib"
+name = "dna_proof"
 version = "0.1.0"
 edition = "2021"
 
