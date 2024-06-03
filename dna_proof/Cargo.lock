@@ -32,9 +32,9 @@ checksum = "7f24254aa9a54b5c858eaee2f5bccdb46aaf0e486a595ed5fd8f86ba55232a70"
 
 [[package]]
 name = "proc-macro2"
-version = "1.0.84"
+version = "1.0.85"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ec96c6a92621310b51366f1e28d05ef11489516e93be030060e5fc12024a49d6"
+checksum = "22244ce15aa966053a896d1accb3a6e68469b97c7f33f284b99f0d576879fc23"
 dependencies = [
  "unicode-ident",
 ]
@@ -80,14 +80,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "test_merkle"
-version = "0.1.0"
-dependencies = [
- "dna_merkle_lib",
- "hex",
-]
-
-[[package]]
 name = "tiny-keccak"
 version = "2.0.2"
 source = "git+https://github.com/sp1-patches/tiny-keccak?branch=master#7ff8a065b9f1414adb60d9aef3859f28705863ea"
@@ -99,8 +91,10 @@ dependencies = [
 [[package]]
 name = "tiny-merkle"
 version = "0.3.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7a29005a3e25530f2b9c7301f42b770dc90aa9dd78b7107d02a61f500393fcb7"
+source = "git+https://github.com/zobront/tiny-merkle?branch=main#fb4389272ee34520be6561532ef54b525506baee"
+dependencies = [
+ "serde",
+]
 
 [[package]]
 name = "unicode-ident"

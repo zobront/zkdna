@@ -1,7 +1,8 @@
 use tiny_keccak::{Hasher, Keccak};
 use tiny_merkle;
+use serde::{Serialize, Deserialize};
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct KeccakHasher;
 
 impl tiny_merkle::Hasher for KeccakHasher {
