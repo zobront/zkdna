@@ -1,9 +1,10 @@
 mod merkle;
+mod proof;
+
 use merkle::{
     DNAMerkleTree,
     helpers::{bp_to_bits, get_root_from_proof},
 };
-mod proof;
 use proof::DNAProof;
 
 fn main() {
