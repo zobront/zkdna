@@ -14,8 +14,12 @@ zkDNA is built with [SP1](https://github.com/succinctlabs/sp1/).
 
 ### To Do
 
+- [x] generate proofs for simple dna example
 - [x] test E2E without zk
+- [x] update parsing script to take in 23andme data format
+- [x] patch tiny-merkle
+- [x] non zk e2e using data input struct
 - [ ] get proof working in zkvm
 - [ ] create on chain components
-- [ ] update parsing script to take in 23andme data format
 - [ ] create build scripts for e2e example
+- [ ] record video walkthrough
