@@ -1,7 +1,6 @@
 //! A simple script to generate and verify the proof of a given program.
 
 use sp1_sdk::{ProverClient, SP1Stdin};
-use hex;
 
 use dna_proof::{
     merkle::{
@@ -76,7 +75,4 @@ fn main() {
         println!("root: {}", hex::encode(root));
         println!("index: {}", index);
     }
-
-
-
 }
