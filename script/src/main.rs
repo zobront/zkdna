@@ -1,6 +1,6 @@
 //! A simple script to generate and verify the proof of a given program.
 
-use sp1_sdk::{ProverClient, SP1Stdin};
+use sp1_sdk::{utils, ProverClient, SP1Stdin};
 
 use dna_proof::{
     merkle::{
@@ -13,9 +13,12 @@ use dna_proof::{
 const ELF: &[u8] = include_bytes!("../../program/elf/riscv32im-succinct-zkvm-elf");
 
 // Set mode to determine whether to prove or execute the program.
-const PROVE: bool = false;
+const PROVE: bool = true;
 
 fn main() {
+    // Setup logging.
+    utils::setup_logger();
+
     // Goal: Prove that the base pair at index 52 is 'T'
     let index = 52;
     let target = bp_to_bits(&b'T');
@@ -40,7 +43,7 @@ fn main() {
     if PROVE {
         // Generate proof.
         let (pk, vk) = client.setup(ELF);
-        let mut proof = client.prove(&pk, stdin).expect("proving failed");
+        let mut proof = client.prove_plonk(&pk, stdin).expect("proving failed");
 
         // Read & print the public values from the proof.
         let target = proof.public_values.read::<u8>();
@@ -52,7 +55,7 @@ fn main() {
         println!("index: {}", index);
 
         // Verify proof.
-        client.verify(&proof, &vk).expect("verification failed");
+        client.verify_plonk(&proof, &vk).expect("verification failed");
 
         // Save proof.
         proof
