@@ -20,7 +20,8 @@ zkDNA is built with [SP1](https://github.com/succinctlabs/sp1/).
 - [x] patch tiny-merkle
 - [x] non zk e2e using data input struct
 - [x] get proof working in zkvm
-- [ ] create on chain components
-- [ ] create build scripts for e2e example
-- [ ] record video walkthrough
+- [x] create on chain components
+- [ ] get plonk proofs working
+- [ ] e2e example flow & record video walkthrough
 - [ ] [sp1 keccak precompile](https://succinctlabs.github.io/sp1/writing-programs/precompiles.html)
+- [ ] contracts: two step participate to validate survery completion with signature
